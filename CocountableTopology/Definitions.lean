@@ -1,11 +1,14 @@
 import Mathlib.Topology.Constructions
 
-
 #check CofiniteTopology
 
+
+-- Auxiliary results
 theorem sInter_countable {α : Type*} {s : Set (Set α)} {t : Set α} (ht : t ∈ s) (hf : t.Countable) :
     (⋂₀ s).Countable := Set.Countable.mono (fun ⦃_⦄ a_1 ↦ a_1 t ht) hf
 
+
+-- Definition of cocountable topology
 @[implicit_reducible]
 def TopologicalSpace.Cocountable {X : Type*} : TopologicalSpace X where
     IsOpen s := s.Nonempty → Set.Countable sᶜ
@@ -22,19 +25,21 @@ def TopologicalSpace.Cocountable {X : Type*} : TopologicalSpace X where
 abbrev CocountableTopology (X : Type*) :=
     WithTopology X .Cocountable
 
-
+-- What do these even do they are just copied from cofinite topology
 universe u v u' v'
-
 variable {X : Type u}
-
 variable {α : Type u} {β : Type v}
 
 
-#check Set.finite_image_iff
+-- More auxiliary results
+theorem countable_image_iff {s : Set α} {f : α → β} (hi : Set.InjOn f s) :
+    (f '' s).Countable ↔ s.Countable := by
+  constructor
+  · exact fun a ↦ Set.countable_of_injective_of_countable_image hi a
+  · exact fun a ↦ Set.Countable.image a f
 
-theorem countable_image_iff {s : Set α} {f : α → β} (hi : Set.InjOn f s) : (f '' s).Countable ↔ s.Countable :=
-  sorry
 
+-- Actual results and API for the cocountable topology
 theorem isOpen_iff {s : Set (CocountableTopology X)} : IsOpen s ↔ s.Nonempty → sᶜ.Countable := by
   simp_rw [isOpen_coinduced, TopologicalSpace.Cocountable, isOpen_mk, ← Set.preimage_compl,
     WithTopology.preimage_toTopology, Set.image_nonempty,
