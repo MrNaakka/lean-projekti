@@ -1,16 +1,20 @@
-import CocountableTopology.Definitions
+import CocountableTopology.Basic
 import Mathlib.Topology.Separation.Basic
 
-universe u
-variable {X : Type u}
+
+-- Proving that any space with the cocountable topology is as T1 space
+
+open CocountableTopology
+
+variable {X : Type*}
 
 instance : T1Space (CocountableTopology X) := by
   apply t1Space_iff_exists_open.mpr
   intro a b hab
 
-  let U : Set (CocountableTopology X) := {b}ᶜ 
+  let U : Set (CocountableTopology X) := {b}ᶜ
 
-  have h1 : IsOpen U := by 
+  have h1 : IsOpen U := by
     rw [isOpen_iff]
     intro _
 
@@ -21,5 +25,4 @@ instance : T1Space (CocountableTopology X) := by
     exact Set.countable_singleton b
   use U
 
-  exact ⟨h1, by exact Set.mem_compl_singleton_iff.mpr hab, by exact Set.notMem_compl_iff.mpr rfl⟩ 
-
+  exact ⟨h1, by exact Set.mem_compl_singleton_iff.mpr hab, by exact Set.notMem_compl_iff.mpr rfl⟩
