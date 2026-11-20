@@ -62,6 +62,26 @@ theorem mem_nhds_iff {x : CocountableTopology X} {s : Set (CocountableTopology X
     s ∈ 𝓝 x ↔ x ∈ s ∧ sᶜ.Countable := by
   rw [nhds_eq, mem_sup, mem_pure, mem_cocountable]
 
+theorem not_disjoint_of_isOpen [Uncountable X]
+    {U V : Set (CocountableTopology X)}
+    (hU : IsOpen U) (hV : IsOpen V)
+    (hneU : U.Nonempty) (hneV : V.Nonempty) :
+    ¬ Disjoint U V := by
+  intro hd
+  have hcU : Uᶜ.Countable := CocountableTopology.isOpen_iff.mp hU hneU
+  have hcV : Vᶜ.Countable := CocountableTopology.isOpen_iff.mp hV hneV
+  have hinter : U ∩ V = ∅ := by
+    exact Disjoint.inter_eq hd
+  have hunion : Uᶜ ∪ Vᶜ = univ := by
+    rw [← compl_inter]
+    exact compl_univ_iff.mpr hinter
+  have hc : (univ : Set (CocountableTopology X)).Countable := by
+    rw [← hunion]
+    exact hcU.union hcV
+  have hcount : Countable X :=
+    CocountableTopology.of.countable_iff.mpr (countable_univ_iff.mp hc)
+  exact (not_uncountable_iff.mpr hcount) (inferInstance : Uncountable X)
+
 theorem discreteTopology_iff : DiscreteTopology (CocountableTopology X) ↔ Countable X := by
   constructor
   · intro h
@@ -86,62 +106,5 @@ theorem discreteTopology_iff : DiscreteTopology (CocountableTopology X) ↔ Coun
     rw [discreteTopology_iff_isOpen_singleton]
     intro x
     exact CocountableTopology.isOpen_iff'.mpr (Or.inr (Set.to_countable _))
-
-theorem not_disjoint_of_isOpen [Uncountable X]
-    {U V : Set (CocountableTopology X)}
-    (hU : IsOpen U) (hV : IsOpen V)
-    (hneU : U.Nonempty) (hneV : V.Nonempty) :
-    ¬ Disjoint U V := by
-  intro hd
-  have hcU : Uᶜ.Countable := CocountableTopology.isOpen_iff.mp hU hneU
-  have hcV : Vᶜ.Countable := CocountableTopology.isOpen_iff.mp hV hneV
-  have hinter : U ∩ V = ∅ := by
-    exact Disjoint.inter_eq hd
-  have hunion : Uᶜ ∪ Vᶜ = univ := by
-    rw [← compl_inter]
-    exact compl_univ_iff.mpr hinter
-  have hc : (univ : Set (CocountableTopology X)).Countable := by
-    rw [← hunion]
-    exact hcU.union hcV
-  have hcount : Countable X :=
-    CocountableTopology.of.countable_iff.mpr (countable_univ_iff.mp hc)
-  exact (not_uncountable_iff.mpr hcount) (inferInstance : Uncountable X)
-
-
-theorem tendsto_iff_eventually_eq (s : ℕ → CocountableTopology X) (x : CocountableTopology X) :
-  Tendsto s atTop (𝓝 x) ↔ ∀ᶠ n in atTop, s n = x := by
-    constructor
-    · intro h
-      let U : Set (CocountableTopology X) :=
-        {y | y = x ∨ y ∉ Set.range s}
-      have hx : x ∈ U := by
-        grind
-
-      have hc : Uᶜ.Countable := by
-        have hsub : Uᶜ ⊆ Set.range s := by
-          intro y hy
-          change ¬(y = x ∨ y ∉ Set.range s) at hy
-          push Not at hy
-          apply hy.2
-        apply Set.Countable.mono hsub
-        exact Set.countable_range s
-
-      have hU : U ∈ 𝓝 x := by
-        apply mem_nhds_iff.mpr
-        exact And.symm ⟨hc, hx⟩
-
-      have he : ∀ᶠ n in atTop, s n ∈ U := by
-        exact eventually_map.mp (h hU)
-
-      filter_upwards [he] with n hn
-      grind
-
-    · intro h
-      rw [tendsto_def]
-      intro U hU
-
-      filter_upwards [h] with n hn
-      rw [mem_nhds_iff] at hU
-      grind
 
 end CocountableTopology

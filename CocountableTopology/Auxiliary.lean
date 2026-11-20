@@ -1,11 +1,11 @@
 import Mathlib.Data.Set.Countable
 
+
+-- Auxiliary set-theoretic results
+
 variable {α β : Type*}
 
 namespace Set
-
-
--- Auxiliary set-theoretic results
 
 theorem sInter_countable {s : Set (Set α)} {t : Set α} (ht : t ∈ s) (hf : t.Countable) :
     (⋂₀ s).Countable := Countable.mono (fun ⦃_⦄ a_1 ↦ a_1 t ht) hf

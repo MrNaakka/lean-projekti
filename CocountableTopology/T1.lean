@@ -28,3 +28,5 @@ instance : T1Space (CocountableTopology X) := by
   use U
 
   exact ⟨h1, by exact Set.mem_compl_singleton_iff.mpr hab, by exact Set.notMem_compl_iff.mpr rfl⟩
+
+end CocountableTopology

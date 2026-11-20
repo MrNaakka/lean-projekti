@@ -49,3 +49,5 @@ instance : LindelofSpace (CocountableTopology X) := by
         constructor
         · exact hf y
         · grind
+
+end CocountableTopology

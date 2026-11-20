@@ -32,3 +32,5 @@ theorem uncountable_not_separableSpace [Uncountable X] : ¬ SeparableSpace (Coco
   have hAclosure : closure A = A := closure_eq_iff_isClosed.mpr hAclosed
   rw [dense_iff_closure_eq, hAclosure] at hAdense
   exact hAnotX hAdense
+
+end CocountableTopology
