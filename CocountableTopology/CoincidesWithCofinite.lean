@@ -1,7 +1,7 @@
 import CocountableTopology.Basic
 
 
--- Proving that when the underlying space is finite, the cocountable topology and the cocountable topology coincide
+-- Proving that when the underlying space is finite, the cocountable topology and the cofinite topology coincide
 
 variable {X : Type*} [Finite X]
 
