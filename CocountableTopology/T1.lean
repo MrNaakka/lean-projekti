@@ -8,6 +8,8 @@ open CocountableTopology
 
 variable {X : Type*}
 
+namespace CocountableTopology
+
 instance : T1Space (CocountableTopology X) := by
   apply t1Space_iff_exists_open.mpr
   intro a b hab

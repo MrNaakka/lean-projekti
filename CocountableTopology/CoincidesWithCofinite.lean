@@ -5,7 +5,10 @@ import CocountableTopology.Basic
 
 variable {X : Type*} [Finite X]
 
-theorem cocountable_is_cofinite : (TopologicalSpace.Cocountable : TopologicalSpace X) = TopologicalSpace.cofinite := by
+namespace CocountableTopology
+
+theorem cocountable_is_cofinite : (TopologicalSpace.Cocountable : TopologicalSpace X)
+    = TopologicalSpace.cofinite := by
   ext x
   constructor
   · intro hx1 hx2

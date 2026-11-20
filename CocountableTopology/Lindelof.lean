@@ -9,6 +9,8 @@ open CocountableTopology
 
 variable {X : Type*}
 
+namespace CocountableTopology
+
 instance : LindelofSpace (CocountableTopology X) := by
   rw [← isLindelof_univ_iff, isLindelof_iff_countable_subcover]
   intro I B hBo h_cover
