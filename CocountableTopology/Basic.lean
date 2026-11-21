@@ -29,6 +29,7 @@ def TopologicalSpace.Cocountable : TopologicalSpace X where
 abbrev CocountableTopology (X : Type*) :=
     WithTopology X .Cocountable
 
+
 namespace CocountableTopology
 
 -- Basic results and API for the cocountable topology

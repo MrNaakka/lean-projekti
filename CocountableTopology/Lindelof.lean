@@ -5,7 +5,6 @@ import Mathlib.Topology.Compactness.Lindelof
 -- Proving that any space with the cocountable topology is a Lindelöf space
 
 open Set
-open CocountableTopology
 
 variable {X : Type*}
 

@@ -4,8 +4,6 @@ import Mathlib.Topology.Separation.Basic
 
 -- Proving that any space with the cocountable topology is as T1 space
 
-open CocountableTopology
-
 variable {X : Type*}
 
 namespace CocountableTopology
