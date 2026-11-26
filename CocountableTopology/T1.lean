@@ -2,7 +2,7 @@ import CocountableTopology.Basic
 import Mathlib.Topology.Separation.Basic
 
 
--- Proving that any space with the cocountable topology is as T1 space
+-- Proving that any space with the cocountable topology is a T1 space
 
 variable {X : Type*}
 

@@ -2,7 +2,7 @@ import CocountableTopology.Basic
 import Mathlib.Topology.Separation.Hausdorff
 
 
--- Prove that subset of a cocountable space is compact iff finite--
+-- Proving that subset of a cocountable space is compact if and only if it is finite
 
 namespace CocountableTopology
 
