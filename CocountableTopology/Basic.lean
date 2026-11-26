@@ -46,6 +46,12 @@ theorem isOpen_iff' {s : Set (CocountableTopology X)} : IsOpen s ↔ s = ∅ ∨
 theorem isClosed_iff {s : Set (CocountableTopology X)} : IsClosed s ↔ s = univ ∨ s.Countable := by
   simp only [← isOpen_compl_iff, isOpen_iff', compl_compl, compl_empty_iff]
 
+theorem dense_of_notCountable {s : Set (CocountableTopology X)} (hs : ¬s.Countable) : Dense s := by
+  apply dense_iff_closure_eq.mpr
+  rcases isClosed_iff.mp isClosed_closure with h | h
+  · assumption
+  · apply (hs (h.mono subset_closure)).elim
+
 theorem nhds_eq (x : CocountableTopology X) : 𝓝 x = pure x ⊔ cocountable := by
   ext U
   simp_rw [mem_nhds_iff, isOpen_iff, mem_sup, mem_pure, mem_cocountable]
